@@ -52,7 +52,11 @@ def test_check_if_hits1():
     #provide at least five tests in total for check_if_hits by the project submission deadline
 
 def test_hit1():
-    #add at least one test for hit by the deadline of session 7 assignment
+    fleet = [(2,4,True,3,{}), (1,1,False,2,{}), (10,2,False,5,{}), (3,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}),
+             (4,10,True,3,{}), (8,4,False,2,{}), (9,10,True,2,{}), (9,8,True,2,{})]
+    assert hit(1,2,fleet) == ([(2,4,True,3,{}), (1,1,False,2,{(1,2)}), (10,2,False,5,{}), (3,4,True,3,{}),
+                               (2,6,False,4,{}), (4,7,True,4,{}), (4,10,True,3,{}), (8,4,False,2,{}), (9,10,True,2,{}),
+                               (9,8,True,2,{})],(1,1,False,2,{(1,2)}))
     #provide at least five tests in total for hit by the project submission deadline
 
 def test_are_unsunk_ships_left1():
