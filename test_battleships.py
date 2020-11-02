@@ -7,34 +7,41 @@ def test_is_sunk1():
     #add at least four more tests for is_sunk by the project submission deadline
 
 def test_ship_type1():
-    ship = "battleship"
+    ship = (2,3,True,5,{})
     assert ship_type(ship) == True
 
 def test_ship_type2():
-    ship = "cruiser"
+    ship = (4,5,False,4,{})
     assert ship_type(ship) == True
 
 def test_ship_type3():
-    ship = "destroyer"
+    ship = (10,1,False,3,{})
     assert ship_type(ship) == True
 
 def test_ship_type4():
-    ship = "submarine"
+    ship = (1,4,True,2,{})
     assert ship_type(ship) == True
+
+def test_ship_type5():
+    ship = (10,3,True,1,{})
+    assert ship_type(ship) == False
     #provide at least five tests in total for ship_type by the project submission deadline
 
 def test_is_open_sea1():
-    fleet = ["destroyer1", "submarine1", "battleship1", "destroyer2", "cruiser1", "cruiser2", "destroyer3", "submarine2", "submarine3", "submarine4"]
-    assert is_open_sea(2,3,fleet) == True
+    fleet = [(3,4,True,3,{}), (1,1,False,2,{}), (2,10,False,5,{}), (2,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}),
+             (4,10,True,3,{}), (8,4,False,2,{}), (9,10,True,2,{}), (9,8,True,2,{})]
+    assert is_open_sea(2,3,fleet) == False
     #provide at least five tests in total for open_sea by the project submission deadline
 
 def test_ok_to_place_ship_at1():
-    fleet = ["destroyer1", "submarine1", "battleship1", "destroyer2", "cruiser1", "cruiser2", "destroyer3", "submarine2", "submarine3", "submarine4"]
-    assert ok_to_place_ship_at(4,5,False,3,fleet) == True
+    fleet = [(3,4,True,3,{}), (1,1,False,2,{}), (2,6,False,4,{}), (4,7,True,4,{}), (4,10,True,3,{}), (8,4,False,2,{}),
+             (9,8,True,2,{})]
+    assert ok_to_place_ship_at(4,5,False,3,fleet) == False
     #provide at least five tests in total for ok_to_place_ship_at by the project submission deadline
 
 def test_place_ship_at1():
-    #add at least one test for place_ship_at by the deadline of session 7 assignment
+    fleet = [(3,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}), (4,10,True,3,{}), (8,4,False,2,{}), (9,8,True,2,{})]
+    assert place_ship_at(1,5,True,5,fleet) == True
     #provide at least five tests in total for place_ship_at by the project submission deadline
 
 def test_check_if_hits1():
