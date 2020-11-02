@@ -28,7 +28,7 @@ def test_ship_type5():
     #provide at least five tests in total for ship_type by the project submission deadline
 
 def test_is_open_sea1():
-    fleet = [(3,4,True,3,{}), (1,1,False,2,{}), (2,10,False,5,{}), (2,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}),
+    fleet = [(3,4,True,3,{}), (1,1,False,2,{}), (10,2,False,5,{}), (2,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}),
              (4,10,True,3,{}), (8,4,False,2,{}), (9,10,True,2,{}), (9,8,True,2,{})]
     assert is_open_sea(2,3,fleet) == False
     #provide at least five tests in total for open_sea by the project submission deadline
@@ -45,7 +45,9 @@ def test_place_ship_at1():
     #provide at least five tests in total for place_ship_at by the project submission deadline
 
 def test_check_if_hits1():
-    #add at least one test for check_if_hits by the deadline of session 7 assignment
+    fleet = [(2,4,True,3,{}), (1,1,False,2,{}), (10,2,False,5,{}), (2,4,True,3,{}), (2,6,False,4,{}), (4,7,True,4,{}),
+             (4,10,True,3,{}), (8,4,False,2,{}), (9,10,True,2,{}), (9,8,True,2,{})]
+    assert check_if_hits(10,5,fleet) == True
     #provide at least five tests in total for check_if_hits by the project submission deadline
 
 def test_hit1():
