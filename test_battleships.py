@@ -24,12 +24,13 @@ def test_ship_type4():
     #provide at least five tests in total for ship_type by the project submission deadline
 
 def test_is_open_sea1():
-    fleet = ["destroyer1", "submarine1"]
+    fleet = ["destroyer1", "submarine1", "battleship1", "destroyer2", "cruiser1", "cruiser2", "destroyer3", "submarine2", "submarine3", "submarine4"]
     assert is_open_sea(2,3,fleet) == True
     #provide at least five tests in total for open_sea by the project submission deadline
 
 def test_ok_to_place_ship_at1():
-    #add at least one test for ok_to_place_ship_at by the deadline of session 7 assignment
+    fleet = ["destroyer1", "submarine1", "battleship1", "destroyer2", "cruiser1", "cruiser2", "destroyer3", "submarine2", "submarine3", "submarine4"]
+    assert ok_to_place_ship_at(4,5,False,3,fleet) == True
     #provide at least five tests in total for ok_to_place_ship_at by the project submission deadline
 
 def test_place_ship_at1():
