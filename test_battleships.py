@@ -24,6 +24,8 @@ def test_ship_type4():
     #provide at least five tests in total for ship_type by the project submission deadline
 
 def test_is_open_sea1():
+    fleet = "player"
+    assert is_open_sea(2,3,fleet)
     #add at least one test for open_sea by the deadline of session 7 assignment
     #provide at least five tests in total for open_sea by the project submission deadline
 
