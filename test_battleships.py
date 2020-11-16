@@ -43,91 +43,127 @@ def test_ship_type4():
 
 
 def test_ship_type5():
-    ship = (9, 3, True, 2, {})
-    assert ship_type(ship) != "Cruiser"
+    ship = (9, 3, True, 1, {})
+    assert ship_type(ship) == ""
 
 
 def test_is_open_sea1():
     """Test to see if a valid location is rejected if in an occupied position"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
-             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert is_open_sea(0, 1, fleet) == False
 
 
 def test_is_open_sea2():
     """Test to see if a valid location in an unoccupied or adjacent position is accepted"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
-             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert is_open_sea(2, 1, fleet) == True
 
 
 def test_is_open_sea3():
     """Test to see if a invalid location in an unoccupied or adjacent position is rejected"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
-    assert is_open_sea(10,2, fleet) == False
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
+             (6, 0, True, 2, {})]
+    assert is_open_sea(10, 2, fleet) == False
 
 
 def test_is_open_sea4():
     """Test to see if a valid location in an adjacent position is rejected"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
+             (6, 0, True, 2, {})]
     assert is_open_sea(8, 4, fleet) == False
 
 
 def test_is_open_sea5():
     """Test to see if a valid location in a diagonally adjacent position is rejected"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
-             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert is_open_sea(9, 0, fleet) == False
 
 
 def test_ok_to_place_ship_at1():
-    """Test to see if a valid ship, is rejected from placement at an intersecting location"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
-             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    """Test to see if a valid ship, is rejected from placement at an intersecting location in a non-full fleet"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (7, 8, True, 2, {})]
     assert ok_to_place_ship_at(3, 4, False, 3, fleet) == False
 
 
 def test_ok_to_place_ship_at2():
     """Test to see if a full fleet will reject a valid ship in a valid location"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
-             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
-    assert ok_to_place_ship_at(3, 0, False, 2, {}) == False
+             (5, 6, False, 4, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
+             (6, 0, True, 2, {})]
+    assert ok_to_place_ship_at(3, 0, False, 2, fleet) == False
 
 
 def test_ok_to_place_ship_at3():
-    """Test to see if a valid ship that does not intersect and is not adjacent to any other ship is accepted"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
-             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    """Test to see if a valid ship that does not intersect and is not adjacent to any other ship is accepted to a
+    non-full fleet"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {})]
     assert ok_to_place_ship_at(7, 8, True, 2, fleet) == True
 
 
 def test_ok_to_place_ship_at4():
     """Test to see if an invalid ship is rejected from a valid location"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
              (7, 3, False, 2, {}), (8, 7, True, 2, {})]
     assert ok_to_place_ship_at(9, 1, False, 6, fleet) == False
 
 
 def test_ok_to_place_ship_at5():
     """Test to see if a valid ship that enters an invalid location is rejected"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
-             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {})]
     assert ok_to_place_ship_at(7, 8, True, 4, fleet) == False
 
 
 def test_place_ship_at1():
-    fleet = [(2, 3, True, 3, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}), (7, 3, False, 2, {}),
-             (8, 7, True, 2, {})]
-    assert place_ship_at(0, 4, True, 5, fleet) == [(2, 3, True, 3, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}),
-                                                   (3, 9, True, 3, {}),
-                                                   (7, 3, False, 2, {}), (8, 7, True, 2, {}), (0, 4, True, 5, {})]
-    # provide at least five tests in total for place_ship_at by the project submission deadline
+    """Test to see if a valid ship at a valid location is appended to the fleet list"""
+    fleet = [(2, 3, True, 3, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
+             (7, 8, True, 2, {})]
+    assert place_ship_at(9, 1, False, 5, fleet) == [(2, 3, True, 3, {}), (1, 5, False, 4, {}), (0, 7, True, 4, {}),
+                                                    (1, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 7, True, 2, {}),
+                                                    (9, 1, False, 5, {})]
+
+
+def test_place_ship_at2():
+    """Test to see if a ship at a valid location is not added to a full fleet"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
+             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
+             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert place_ship_at(3, 0, False, 2, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}),
+                                                    (1, 5, True, 3, {}), (5, 6, False, 4, {}), (0, 7, True, 4, {}),
+                                                    (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
+                                                    (6, 0, True, 2, {})]
+
+
+def test_place_ship_at3():
+    """Test to see if an invalid ship at a valid location is not added to a non-full fleet"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {})]
+    assert place_ship_at(7, 8, True, 1, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
+                                                   (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {})]
+
+
+def test_place_ship_at4():
+    """Test to see if a valid ship at an invalid location is not added to a non-full fleet"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (7, 8, True, 2, {})]
+    assert place_ship_at(6, 8, True, 2, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
+                                                   (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
+                                                   (7, 8, True, 2, {})]
+
+
+def test_place_ship_at5():
+    """Test to see if a valid ship of a complete type (i.e. 2/2 cruisers have already been place) is not added to a
+    non-full fleet """
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (7, 8, True, 2, {}), (5, 6, False, 4, {})]
+    assert place_ship_at(9, 2, False, 4, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
+                                                    (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
+                                                    (7, 8, True, 2, {}), (5, 6, False, 4, {})]
 
 
 def test_check_if_hits1():
@@ -142,11 +178,10 @@ def test_hit1():
     fleet = [(1, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (2, 3, True, 3, {}),
              (1, 5, False, 4, {}), (3, 6, True, 4, {}),
              (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}), (8, 7, True, 2, {})]
-    assert hit(0, 1, fleet) == (
-        [(1, 3, True, 3, {}), (0, 0, False, 2, {(0, 1)}), (9, 1, False, 5, {}), (2, 3, True, 3, {}),
-         (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}),
-         (8, 7, True, 2, {})]
-    )
+    assert hit(0, 1, fleet) == [(1, 3, True, 3, {}), (0, 0, False, 2, {(0, 1)}), (9, 1, False, 5, {}),
+                                (2, 3, True, 3, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
+                                (7, 3, False, 2, {}), (8, 9, True, 2, {}), (8, 7, True, 2, {})]
+
     # provide at least five tests in total for hit by the project submission deadline
 
 
