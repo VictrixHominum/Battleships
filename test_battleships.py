@@ -3,8 +3,24 @@ from battleships import *
 
 
 def test_is_sunk1():
-    s = (2, 3, False, 3, {(2, 3), (3, 3), (4, 3)})
-    assert is_sunk(s) == True
+    assert is_sunk((2, 3, False, 3, {(2, 3), (2, 4), (2, 5)})) == True
+
+
+def test_is_sunk2():
+    assert is_sunk((5, 5, True, 5, {(5, 5), (6, 5), (8, 5), (9, 5)})) == False
+
+
+def test_is_sunk3():
+    assert is_sunk((0, 8, False, 2, {(0, 8), (0, 9)})) == True
+
+
+def test_is_sunk4():
+    assert is_sunk((4, 6, True, 4, {(4, 6), (5, 6), (6, 6), (7, 6)})) == True
+
+
+def test_is_sunk5():
+    assert is_sunk((6, 7, False, 3, {(6, 7), (6, 8)})) == False
+
     # add at least four more tests for is_sunk by the project submission deadline
 
 
