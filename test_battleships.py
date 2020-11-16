@@ -130,9 +130,8 @@ def test_place_ship_at1():
 
 def test_place_ship_at2():
     """Test to see if a ship at a valid location is not added to a full fleet"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
-             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert place_ship_at(3, 0, False, 2, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}),
                                                     (1, 5, True, 3, {}), (5, 6, False, 4, {}), (0, 7, True, 4, {}),
                                                     (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
@@ -167,11 +166,33 @@ def test_place_ship_at5():
 
 
 def test_check_if_hits1():
-    fleet = [(1, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 3, True, 3, {}),
-             (1, 5, False, 4, {}), (3, 6, True, 4, {}),
-             (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}), (8, 7, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert check_if_hits(9, 4, fleet) == True
-    # provide at least five tests in total for check_if_hits by the project submission deadline
+
+
+def test_check_if_hits2():
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert check_if_hits(3, 1, fleet) == False
+
+
+def test_check_if_hits3():
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert check_if_hits(6, 7, fleet) == False
+
+
+def test_check_if_hits4():
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert check_if_hits(3, 3, fleet) == True
+
+
+def test_check_if_hits5():
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
+             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert check_if_hits(2, 9, fleet) == True
 
 
 def test_hit1():
