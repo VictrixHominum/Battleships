@@ -48,6 +48,7 @@ def test_ship_type5():
 
 
 def test_is_open_sea1():
+    """Test to see if a valid location is rejected if in an occupied position"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
              (5, 6, False, 4, {}), (0, 7, True, 4, {}),
              (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
@@ -55,6 +56,7 @@ def test_is_open_sea1():
 
 
 def test_is_open_sea2():
+    """Test to see if a valid location in an unoccupied or adjacent position is accepted"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
              (5, 6, False, 4, {}), (0, 7, True, 4, {}),
              (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
@@ -62,18 +64,21 @@ def test_is_open_sea2():
 
 
 def test_is_open_sea3():
+    """Test to see if a invalid location in an unoccupied or adjacent position is rejected"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}),
              (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
-    assert is_open_sea(9,2, fleet) == True
+    assert is_open_sea(10,2, fleet) == False
 
 
 def test_is_open_sea4():
+    """Test to see if a valid location in an adjacent position is rejected"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}),
              (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
     assert is_open_sea(8, 4, fleet) == False
 
 
 def test_is_open_sea5():
+    """Test to see if a valid location in a diagonally adjacent position is rejected"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
              (5, 6, False, 4, {}), (0, 7, True, 4, {}),
              (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
@@ -81,11 +86,39 @@ def test_is_open_sea5():
 
 
 def test_ok_to_place_ship_at1():
+    """Test to see if a valid ship, is rejected from placement at an intersecting location"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
-             (7, 3, False, 2, {}),
-             (8, 7, True, 2, {})]
+             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
     assert ok_to_place_ship_at(3, 4, False, 3, fleet) == False
-    # provide at least five tests in total for ok_to_place_ship_at by the project submission deadline
+
+
+def test_ok_to_place_ship_at2():
+    """Test to see if a full fleet will reject a valid ship in a valid location"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}),
+             (5, 6, False, 4, {}), (0, 7, True, 4, {}),
+             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
+    assert ok_to_place_ship_at(3, 0, False, 2, {}) == False
+
+
+def test_ok_to_place_ship_at3():
+    """Test to see if a valid ship that does not intersect and is not adjacent to any other ship is accepted"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    assert ok_to_place_ship_at(7, 8, True, 2, fleet) == True
+
+
+def test_ok_to_place_ship_at4():
+    """Test to see if an invalid ship is rejected from a valid location"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    assert ok_to_place_ship_at(9, 1, False, 6, fleet) == False
+
+
+def test_ok_to_place_ship_at5():
+    """Test to see if a valid ship that enters an invalid location is rejected"""
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}),
+             (7, 3, False, 2, {}), (8, 7, True, 2, {})]
+    assert ok_to_place_ship_at(7, 8, True, 4, fleet) == False
 
 
 def test_place_ship_at1():
