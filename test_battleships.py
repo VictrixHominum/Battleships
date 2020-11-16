@@ -44,7 +44,7 @@ def test_ship_type4():
 
 def test_ship_type5():
     ship = (9, 3, True, 1, {})
-    assert ship_type(ship) == ""
+    assert ship_type(ship) == "Invalid"
 
 
 def test_is_open_sea1():

@@ -1,13 +1,21 @@
-#see the readme.md file for description and data 
-
-
 def is_sunk(ship):
-    #remove pass and add your implementation
-    pass
+    if len(ship[4]) == ship[3]:
+        return True
+    else:
+        return False
+
 
 def ship_type(ship):
-    #remove pass and add your implementation
-    pass
+    if ship[3] == 2:
+        return "Submarine"
+    elif ship[3] == 3:
+        return "Destroyer"
+    elif ship[3] == 4:
+        return "Cruiser"
+    elif ship[3] == 5:
+        return "Battleship"
+    else:
+        return "Invalid"
 
 def is_open_sea(row, column, fleet):
     #remove pass and add your implementation
