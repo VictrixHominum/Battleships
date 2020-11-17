@@ -19,7 +19,11 @@ def ship_type(ship):
 
 
 def is_open_sea(row, column, fleet):
+    if 0 < (row or column) > 9:
+        return False
+
     blocked_spaces = []
+
     for ship in fleet:
         blocked_spaces.append((ship[0], ship[1]))
         if ship[2] == True:
@@ -27,13 +31,22 @@ def is_open_sea(row, column, fleet):
         else:
             [(blocked_spaces.append((ship[0], ship[1] + i))) for i in range(1, ship[3])]
 
-    print(blocked_spaces)
+    for i in range(len(blocked_spaces)):
+        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1]))
+        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1]))
+        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1] + 1))
+        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1] - 1))
+        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1] + 1))
+        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1] - 1))
+        blocked_spaces.append((blocked_spaces[i][0], blocked_spaces[i][1] + 1))
+        blocked_spaces.append((blocked_spaces[i][0], blocked_spaces[i][1] - 1))
 
-is_open_sea(1,2, [(1, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 3, True, 3, {}),
-             (3, 6, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}),
-             (8, 7, True, 2, {})])
+    blocked_spaces = set(blocked_spaces)
 
-
+    if (row, column) in blocked_spaces:
+        return False
+    else:
+        return True
 
 """def ok_to_place_ship_at(row, column, horizontal, length, fleet):
     #remove pass and add your implementation

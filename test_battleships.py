@@ -72,7 +72,7 @@ def test_is_open_sea4():
     """Test to see if a valid location in an adjacent position is rejected"""
     fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
              (6, 0, True, 2, {})]
-    assert is_open_sea(8, 4, fleet) == False
+    assert is_open_sea(1, 0, fleet) == False
 
 
 def test_is_open_sea5():
