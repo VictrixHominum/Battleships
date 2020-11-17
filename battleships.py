@@ -1,5 +1,6 @@
 import random
 
+
 def is_sunk(ship):
     if len(ship[4]) == ship[3]:
         return True
@@ -21,7 +22,6 @@ def ship_type(ship):
 
 
 def is_open_sea(row, column, fleet):
-
     # checks point is on the grid
     if 0 < (row or column) > 9:
         return False
@@ -56,7 +56,6 @@ def is_open_sea(row, column, fleet):
 
 
 def ok_to_place_ship_at(row, column, horizontal, length, fleet):
-
     # checks to see if the fleet is full and new ship is a valid ship
     if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
         return False
@@ -97,7 +96,7 @@ def randomly_place_all_ships():
     fleet = []
 
     for num in range(5, 1, -1):
-        for count in range(0, 6-num):
+        for count in range(0, 6 - num):
             finished = False
             while finished is not True:
                 ship = (random.randint(0, 9), random.randint(0, 9), random.choice([True, False]), num)
@@ -107,13 +106,23 @@ def randomly_place_all_ships():
 
     return fleet
 
-print(randomly_place_all_ships())
 
-"""def check_if_hits(row, column, fleet):
-    #remove pass and add your implementation
-    pass
+def check_if_hits(row, column, fleet):
+    occupied_spaces = []
+    for ship in fleet:
+        occupied_spaces.append((ship[0], ship[1]))
+        if ship[2] == True:
+            [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(1, ship[3])]
+        else:
+            [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(1, ship[3])]
 
-def hit(row, column, fleet):
+    if (row, column) in occupied_spaces:
+        return True
+    else:
+        return False
+
+
+""" def hit(row, column, fleet):
     #remove pass and add your implementation
     pass
 
