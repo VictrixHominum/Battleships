@@ -114,55 +114,56 @@ def test_ok_to_place_ship_at4():
 
 def test_ok_to_place_ship_at5():
     """Test to see if a valid ship that enters an invalid location is rejected"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
+    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (1, 0, True, 4, {}), (1, 9, True, 3, {}),
              (7, 3, False, 2, {})]
     assert ok_to_place_ship_at(7, 8, True, 4, fleet) == False
 
 
 def test_place_ship_at1():
     """Test to see if a valid ship at a valid location is appended to the fleet list"""
-    fleet = [(2, 3, True, 3, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
-             (7, 8, True, 2, {})]
-    assert place_ship_at(9, 1, False, 5, fleet) == [(2, 3, True, 3, {}), (1, 5, False, 4, {}), (0, 7, True, 4, {}),
-                                                    (1, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 7, True, 2, {}),
-                                                    (9, 1, False, 5, {})]
+    fleet = [(3, 2, True, 3, {}), (5, 1, False, 3, {}), (7, 0, True, 4, {}), (9, 1, True, 3, {}), (3, 7, False, 2, {}),
+             (8, 7, True, 2, {})]
+    assert place_ship_at(1, 9, False, 5, fleet) == [(3, 2, True, 3, {}), (5, 1, False, 3, {}), (7, 0, True, 4, {}),
+                                                    (9, 1, True, 3, {}), (3, 7, False, 2, {}), (8, 7, True, 2, {}),
+                                                    (1, 9, False, 5, {})]
 
 
 def test_place_ship_at2():
     """Test to see if a ship at a valid location is not added to a full fleet"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (5, 6, False, 4, {}),
-             (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}), (6, 0, True, 2, {})]
-    assert place_ship_at(3, 0, False, 2, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}),
-                                                    (1, 5, True, 3, {}), (5, 6, False, 4, {}), (0, 7, True, 4, {}),
-                                                    (1, 9, True, 3, {}), (7, 3, False, 2, {}), (7, 8, True, 2, {}),
-                                                    (6, 0, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
+             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {}), (8, 7, True, 2, {}), (3, 7, True, 2, {})]
+    assert place_ship_at(3, 0, False, 2, fleet) == [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}),
+                                                    (5, 1, False, 3, {}), (5, 5, False, 4, {}), (1, 0, True, 4, {}),
+                                                    (1, 9, True, 3, {}), (6, 3, False, 2, {}), (8, 7, True, 2, {}),
+                                                    (3, 7, True, 2, {})]
 
 
 def test_place_ship_at3():
     """Test to see if an invalid ship at a valid location is not added to a non-full fleet"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
-             (7, 3, False, 2, {})]
-    assert place_ship_at(7, 8, True, 1, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
-                                                   (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
+             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {})]
+    assert place_ship_at(0, 7, True, 1, fleet) == [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}),
+                                                   (5, 1, False, 3, {}), (5, 5, False, 4, {}), (1, 0, True, 4, {}),
+                                                   (1, 9, True, 3, {}), (6, 3, False, 2, {})]
 
 
 def test_place_ship_at4():
     """Test to see if a valid ship at an invalid location is not added to a non-full fleet"""
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
-             (7, 3, False, 2, {}), (7, 8, True, 2, {})]
-    assert place_ship_at(6, 8, True, 2, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
-                                                   (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
-                                                   (7, 8, True, 2, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
+             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {})]
+    assert place_ship_at(9, 9, True, 2, fleet) == [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}),
+                                                   (5, 1, False, 3, {}), (5, 5, False, 4, {}), (1, 0, True, 4, {}),
+                                                   (1, 9, True, 3, {}), (6, 3, False, 2, {})]
 
 
 def test_place_ship_at5():
     """Test to see if a valid ship of a complete type (i.e. 2/2 cruisers have already been place) is not added to a
     non-full fleet """
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}), (0, 7, True, 4, {}), (1, 9, True, 3, {}),
-             (7, 3, False, 2, {}), (7, 8, True, 2, {}), (5, 6, False, 4, {})]
-    assert place_ship_at(9, 2, False, 4, fleet) == [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (1, 5, False, 3, {}),
-                                                    (0, 7, True, 4, {}), (1, 9, True, 3, {}), (7, 3, False, 2, {}),
-                                                    (7, 8, True, 2, {}), (5, 6, False, 4, {})]
+    fleet = [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
+             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {})]
+    assert place_ship_at(3, 7, False, 3, fleet) == [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}),
+                                                    (5, 1, False, 3, {}), (5, 5, False, 4, {}), (1, 0, True, 4, {}),
+                                                    (1, 9, True, 3, {}), (6, 3, False, 2, {})]
 
 
 def test_check_if_hits1():

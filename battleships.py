@@ -53,6 +53,13 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
     if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
         return False
 
+    count = 0
+    for ship in fleet:
+        if ship[3] == length:
+            count += 1
+    if count >= 6-length:
+        return False
+
     if horizontal == True:
         for i in range(0, length):
             if is_open_sea(row, column + i, fleet) == False or column + (length-1) > 9:
@@ -68,11 +75,19 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
 
 
 
-"""def place_ship_at(row, column, horizontal, length, fleet):
-    #remove pass and add your implementation
-    pass
+def place_ship_at(row, column, horizontal, length, fleet):
 
-def randomly_place_all_ships():
+    if ok_to_place_ship_at(row, column, horizontal, length, fleet) == True:
+        fleet.append((row, column, horizontal, length, {}))
+        return fleet
+
+    else:
+        return fleet
+
+print(ok_to_place_ship_at(3, 7, False, 3, [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
+             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {})]))
+
+"""def randomly_place_all_ships():
     #remove pass and add your implementation
     pass
 
