@@ -134,11 +134,13 @@ def hit(row, column, fleet):
                 return (fleet, fleet[x])
 
 
-""" def are_unsunk_ships_left(fleet):
-    #remove pass and add your implementation
-    pass
+def are_unsunk_ships_left(fleet):
+    for ship in fleet:
+        if is_sunk(ship) == False:
+            return True
+    return False
 
-def main():
+"""  def main():
     #the implementation provided below is indicative only
     #you should improve it or fully rewrite to provide better functionality (see readme file)
     current_fleet = randomly_place_all_ships()
