@@ -1,4 +1,4 @@
-"""def is_sunk(ship):
+def is_sunk(ship):
     if len(ship[4]) == ship[3]:
         return True
     else:
@@ -15,7 +15,7 @@ def ship_type(ship):
     elif ship[3] == 5:
         return "Battleship"
     else:
-        return "Invalid" """
+        return "Invalid"
 
 
 def is_open_sea(row, column, fleet):
@@ -48,11 +48,27 @@ def is_open_sea(row, column, fleet):
     else:
         return True
 
-"""def ok_to_place_ship_at(row, column, horizontal, length, fleet):
-    #remove pass and add your implementation
-    pass
 
-def place_ship_at(row, column, horizontal, length, fleet):
+def ok_to_place_ship_at(row, column, horizontal, length, fleet):
+    if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
+        return False
+
+    if horizontal == True:
+        for i in range(0, length):
+            if is_open_sea(row, column + i, fleet) == False or column + (length-1) > 9:
+                return False
+            else:
+                return True
+    else:
+        for i in range(0, length):
+            if is_open_sea(row + i, column, fleet) == False or row + (length-1) > 9:
+                return False
+            else:
+                return True
+
+
+
+"""def place_ship_at(row, column, horizontal, length, fleet):
     #remove pass and add your implementation
     pass
 
