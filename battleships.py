@@ -1,3 +1,5 @@
+import random
+
 def is_sunk(ship):
     if len(ship[4]) == ship[3]:
         return True
@@ -91,11 +93,23 @@ def place_ship_at(row, column, horizontal, length, fleet):
         return fleet
 
 
-"""def randomly_place_all_ships():
-    #remove pass and add your implementation
-    pass
+def randomly_place_all_ships():
+    fleet = []
 
-def check_if_hits(row, column, fleet):
+    for num in range(5, 1, -1):
+        for count in range(0, 6-num):
+            finished = False
+            while finished is not True:
+                ship = (random.randint(0, 9), random.randint(0, 9), random.choice([True, False]), num)
+                if ok_to_place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet) == True:
+                    place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet)
+                    finished = True
+
+    return fleet
+
+print(randomly_place_all_ships())
+
+"""def check_if_hits(row, column, fleet):
     #remove pass and add your implementation
     pass
 
