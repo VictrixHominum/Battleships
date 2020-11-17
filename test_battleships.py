@@ -254,8 +254,8 @@ def test_hit5():
 
 def test_are_unsunk_ships_left1():
     fleet = [(1, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 3, True, 3, {}),
-             (3, 6, False, 4, {}), (3, 6, True, 4, {}),
-             (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}), (8, 7, True, 2, {})]
+             (3, 6, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}), (7, 3, False, 2, {}), (8, 9, True, 2, {}),
+             (8, 7, True, 2, {})]
     assert are_unsunk_ships_left(fleet) == True
 
 
