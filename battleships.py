@@ -30,11 +30,10 @@ def is_open_sea(row, column, fleet):
     blocked_spaces = []
 
     for ship in fleet:
-        blocked_spaces.append((ship[0], ship[1]))
         if ship[2] == True:
-            [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(1, ship[3])]
+            [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
         else:
-            [(blocked_spaces.append((ship[0], ship[1] + i))) for i in range(1, ship[3])]
+            [(blocked_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
 
     for i in range(len(blocked_spaces)):
         blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1]))
@@ -85,7 +84,7 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
 
 def place_ship_at(row, column, horizontal, length, fleet):
     if ok_to_place_ship_at(row, column, horizontal, length, fleet) == True:
-        fleet.append((row, column, horizontal, length, {}))
+        fleet.append((row, column, horizontal, length, set([])))
         return fleet
 
     else:
@@ -110,11 +109,10 @@ def randomly_place_all_ships():
 def check_if_hits(row, column, fleet):
     occupied_spaces = []
     for ship in fleet:
-        occupied_spaces.append((ship[0], ship[1]))
         if ship[2] == True:
-            [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(1, ship[3])]
+            [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
         else:
-            [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(1, ship[3])]
+            [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
 
     if (row, column) in occupied_spaces:
         return True
@@ -122,11 +120,21 @@ def check_if_hits(row, column, fleet):
         return False
 
 
-""" def hit(row, column, fleet):
-    #remove pass and add your implementation
-    pass
+def hit(row, column, fleet):
+    if check_if_hits(row, column, fleet) == True:
+        for x in range(len(fleet)):
+            ship_points = []
+            if fleet[x][2] == True:
+                [(ship_points.append((fleet[x][0] + i, fleet[x][1]))) for i in range(0, fleet[x][3])]
+            else:
+                [(ship_points.append((fleet[x][0], fleet[x][1] + i))) for i in range(0, fleet[x][3])]
+            if (row, column) in ship_points:
+                fleet[x][4].add((row, column))
+                fleet[x] = (fleet[x][0],fleet[x][1], fleet[x][2], fleet[x][3], fleet[x][4])
+                return (fleet, fleet[x])
 
-def are_unsunk_ships_left(fleet):
+
+""" def are_unsunk_ships_left(fleet):
     #remove pass and add your implementation
     pass
 

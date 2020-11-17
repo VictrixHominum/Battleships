@@ -197,11 +197,11 @@ def test_check_if_hits5():
 
 
 def test_hit1():
-    fleet = [(2, 3, True, 3, {}), (0, 0, False, 2, {}), (9, 1, False, 5, {}), (1, 5, True, 3, {}), (0, 7, True, 4, {}),
-             (1, 9, True, 3, {}), (7, 3, False, 2, {}), (6, 0, True, 2, {}), (7, 8, True, 2, {}), (5, 6, False, 4, {})]
-    assert hit(0, 1, fleet) == ([(2, 3, True, 3, {}), (0, 0, False, 2, {(0, 1)}), (9, 1, False, 5, {}),
-                                 (1, 5, False, 4, {}), (3, 6, True, 4, {}), (3, 9, True, 3, {}), (7, 3, False, 2, {}),
-                                 (8, 9, True, 2, {}), (8, 7, True, 2, {})], (0, 0, False, 2, {(0, 1)}))
+    fleet = [(2, 3, True, 3, set([])), (0, 0, False, 2, set([])), (9, 1, False, 5, set([])), (1, 5, True, 3, set([])), (3, 6, True, 4, set([])),
+             (1, 9, True, 3, set([])), (7, 3, False, 2, set([])), (6, 0, True, 2, set([])), (7, 8, True, 2, set([])), (5, 6, False, 4, set([]))]
+    assert hit(0, 1, fleet) == ([(2, 3, True, 3, set([])), (0, 0, False, 2, {(0, 1)}), (9, 1, False, 5, set([])),
+                                 (1, 5, True, 3, set([])), (3, 6, True, 4, set([])), (1, 9, True, 3, set([])), (7, 3, False, 2, set([])),
+                                 (6, 0, True, 2, set([])), (7, 8, True, 2, set([])),  (5, 6, False, 4, set([]))], (0, 0, False, 2, {(0, 1)}))
 
 
 def test_hit2():
