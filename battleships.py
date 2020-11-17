@@ -50,33 +50,35 @@ def is_open_sea(row, column, fleet):
 
 
 def ok_to_place_ship_at(row, column, horizontal, length, fleet):
+
+    # checks to see if the fleet is full and new ship is a valid ship
     if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
         return False
 
+    # checks if the number of ship of this type is already at the maximum
     count = 0
     for ship in fleet:
         if ship[3] == length:
             count += 1
-    if count >= 6-length:
+    if count >= 6 - length:
         return False
 
+    # checks if all points the ship would occupy are valid
     if horizontal == True:
         for i in range(0, length):
-            if is_open_sea(row, column + i, fleet) == False or column + (length-1) > 9:
+            if is_open_sea(row, column + i, fleet) == False or column + (length - 1) > 9:
                 return False
             else:
                 return True
     else:
         for i in range(0, length):
-            if is_open_sea(row + i, column, fleet) == False or row + (length-1) > 9:
+            if is_open_sea(row + i, column, fleet) == False or row + (length - 1) > 9:
                 return False
             else:
                 return True
 
 
-
 def place_ship_at(row, column, horizontal, length, fleet):
-
     if ok_to_place_ship_at(row, column, horizontal, length, fleet) == True:
         fleet.append((row, column, horizontal, length, {}))
         return fleet
@@ -84,8 +86,6 @@ def place_ship_at(row, column, horizontal, length, fleet):
     else:
         return fleet
 
-print(ok_to_place_ship_at(3, 7, False, 3, [(2, 3, True, 3, {}), (0, 5, False, 2, {}), (1, 9, False, 5, {}), (5, 1, False, 3, {}), (5, 5, False, 4, {}),
-             (1, 0, True, 4, {}), (1, 9, True, 3, {}), (6, 3, False, 2, {})]))
 
 """def randomly_place_all_ships():
     #remove pass and add your implementation
