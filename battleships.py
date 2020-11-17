@@ -19,9 +19,12 @@ def ship_type(ship):
 
 
 def is_open_sea(row, column, fleet):
+
+    # checks point is on the grid
     if 0 < (row or column) > 9:
         return False
 
+    # creates list of all points that are occupied or adjacent to the existing fleet
     blocked_spaces = []
 
     for ship in fleet:
@@ -43,6 +46,7 @@ def is_open_sea(row, column, fleet):
 
     blocked_spaces = set(blocked_spaces)
 
+    # checks if point is in the non-valid point list
     if (row, column) in blocked_spaces:
         return False
     else:
