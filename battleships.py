@@ -60,7 +60,14 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
 
     # checks to see if the fleet is full and new ship is a valid ship
     if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
-        return False
+        allowed = False
+
+    if horizontal is True:
+        if column + length -1 > 9:
+            allowed = False
+    else:
+        if row + length - 1 > 9:
+            allowed = False
 
     # checks if the number of ship of this type is already at the maximum
     count = 0
@@ -68,19 +75,17 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
         if ship[3] == length:
             count += 1
     if count >= 6 - length:
-        return False
+        allowed = False
 
     # checks if all points the ship would occupy are valid
-    for i in range(len(fleet)):
-        if horizontal == True:
-            for i in range(0, length):
-                if is_open_sea(row, column + i, fleet) == False or column + (length - 1) > 9:
-                    allowed = False
-
-        else:
-            for i in range(0, length):
-                if is_open_sea(row + i, column, fleet) == False or row + (length - 1) > 9:
-                    allowed = False
+    if horizontal == True:
+        for j in range(0, length):
+            if is_open_sea(row, column + j, fleet) == False:
+                allowed = False
+    else:
+        for j in range(0, length):
+            if is_open_sea(row + j, column, fleet) == False:
+                allowed = False
 
     if allowed is True:
         return True
@@ -119,6 +124,8 @@ def check_if_hits(row, column, fleet):
             [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
         else:
             [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
+
+    print(occupied_spaces)
 
     if (row, column) in occupied_spaces:
         return True
