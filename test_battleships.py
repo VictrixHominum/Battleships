@@ -121,11 +121,11 @@ def test_ok_to_place_ship_at5():
 
 def test_place_ship_at1():
     """Test to see if a valid ship at a valid location is appended to the fleet list"""
-    fleet = [(3, 2, False, 3, set([])), (5, 1, True, 3, set([])), (7, 0, False, 4, set([])), (9, 1, False, 3, set([])), (3, 7, True, 2, set([])),
+    fleet = [(2, 3, False, 3, set([])), (0, 5, True, 2, set([])), (7, 0, True, 4, set([])), (9, 1, True, 3, set([])), (3, 7, True, 2, set([])),
              (8, 7, False, 2, set([]))]
-    assert place_ship_at(1, 9, False, 5, fleet) == [(3, 2, False, 3, set([])), (5, 1, True, 3, set([])), (7, 0, False, 4, set([])),
-                                                   (9, 1, False, 3, set([])), (3, 7, True, 2, set([])), (8, 7, False, 2, set([])),
-                                                   (1, 9, False, 5, set([]))]
+    assert place_ship_at(5, 5, True, 5, fleet) == [(2, 3, False, 3, set([])), (0, 5, True, 2, set([])), (7, 0, True, 4, set([])),
+                                                   (9, 1, True, 3, set([])), (3, 7, True, 2, set([])), (8, 7, False, 2, set([])),
+                                                   (5, 5, True, 5, set([]))]
 
 
 def test_place_ship_at2():

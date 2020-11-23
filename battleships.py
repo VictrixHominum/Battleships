@@ -56,6 +56,8 @@ def is_open_sea(row, column, fleet):
 
 
 def ok_to_place_ship_at(row, column, horizontal, length, fleet):
+    allowed = True
+
     # checks to see if the fleet is full and new ship is a valid ship
     if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
         return False
@@ -69,18 +71,21 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
         return False
 
     # checks if all points the ship would occupy are valid
-    if horizontal == True:
-        for i in range(0, length):
-            if is_open_sea(row, column + i, fleet) == False or column + (length - 1) > 9:
-                return False
-            else:
-                return True
+    for i in range(len(fleet)):
+        if horizontal == True:
+            for i in range(0, length):
+                if is_open_sea(row, column + i, fleet) == False or column + (length - 1) > 9:
+                    allowed = False
+
+        else:
+            for i in range(0, length):
+                if is_open_sea(row + i, column, fleet) == False or row + (length - 1) > 9:
+                    allowed = False
+
+    if allowed is True:
+        return True
     else:
-        for i in range(0, length):
-            if is_open_sea(row + i, column, fleet) == False or row + (length - 1) > 9:
-                return False
-            else:
-                return True
+        return False
 
 
 def place_ship_at(row, column, horizontal, length, fleet):
@@ -100,7 +105,7 @@ def randomly_place_all_ships():
             finished = False
             while finished is not True:
                 ship = (random.randint(0, 9), random.randint(0, 9), random.choice([True, False]), num)
-                if ok_to_place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet) == True:
+                if ok_to_place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet):
                     place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet)
                     finished = True
 
@@ -147,12 +152,11 @@ def main():
 
     current_fleet = randomly_place_all_ships()
 
+    print(current_fleet)
+
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
     game_over = False
     shots = 0
-
-    print(current_fleet)
-    print(type(current_fleet))
 
     print("\n Hello and welcome to Battleships! \n If at anypoint you wish to end the game simply enter 'Exit'. \n "
           "Good Luck!")
@@ -175,13 +179,11 @@ def main():
 
         if check_if_hits(current_row, current_column, current_fleet):
             print("\n You hit!")
-            print(type(current_fleet))
-            current_fleet = hit(current_row, current_column, current_fleet)
-            print(current_fleet)
-#            if is_sunk(ship_hit):
-#                print("\n You sank a " + ship_type(ship_hit) + "!")
-#        else:
-#            print("\n You missed!")
+            current_fleet, ship_hit = hit(current_row, current_column, current_fleet)
+            if is_sunk(ship_hit):
+                print("\n You sank a " + ship_type(ship_hit) + "!")
+        else:
+            print("\n You missed!")
 
         if not are_unsunk_ships_left(current_fleet):
             game_over = True
