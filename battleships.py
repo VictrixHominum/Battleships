@@ -125,8 +125,6 @@ def check_if_hits(row, column, fleet):
         else:
             [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
 
-    print(occupied_spaces)
-
     if (row, column) in occupied_spaces:
         return True
     else:
@@ -195,7 +193,7 @@ def main():
         if not are_unsunk_ships_left(current_fleet):
             game_over = True
 
-    print("Game over! You required", shots, "shots.")
+    print("\n Game over! You required", shots, "shots.")
 
 
 if __name__ == '__main__':
