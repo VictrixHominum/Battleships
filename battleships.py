@@ -1,4 +1,5 @@
 import random
+import re
 
 
 def is_sunk(ship):
@@ -31,9 +32,9 @@ def is_open_sea(row, column, fleet):
 
     for ship in fleet:
         if ship[2] == True:
-            [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
-        else:
             [(blocked_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
+        else:
+            [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
 
     for i in range(len(blocked_spaces)):
         blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1]))
@@ -110,9 +111,9 @@ def check_if_hits(row, column, fleet):
     occupied_spaces = []
     for ship in fleet:
         if ship[2] == True:
-            [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
-        else:
             [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
+        else:
+            [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
 
     if (row, column) in occupied_spaces:
         return True
@@ -130,8 +131,8 @@ def hit(row, column, fleet):
                 [(ship_points.append((fleet[x][0], fleet[x][1] + i))) for i in range(0, fleet[x][3])]
             if (row, column) in ship_points:
                 fleet[x][4].add((row, column))
-                fleet[x] = (fleet[x][0],fleet[x][1], fleet[x][2], fleet[x][3], fleet[x][4])
-                return (fleet, fleet[x])
+                fleet[x] = (fleet[x][0], fleet[x][1], fleet[x][2], fleet[x][3], fleet[x][4])
+                return fleet, fleet[x]
 
 
 def are_unsunk_ships_left(fleet):
@@ -140,31 +141,50 @@ def are_unsunk_ships_left(fleet):
             return True
     return False
 
-"""  def main():
-    #the implementation provided below is indicative only
-    #you should improve it or fully rewrite to provide better functionality (see readme file)
+
+def main():
+
     current_fleet = randomly_place_all_ships()
 
+    error_message = "\n Please enter two integers between 0 and 9, separated with a space."
     game_over = False
     shots = 0
 
+    print(current_fleet)
+
+    print("\n Hello and welcome to Battleships! \n If at anypoint you wish to end the game simply enter 'Exit'. \n "
+          "Good Luck!")
+
     while not game_over:
-        loc_str = input("Enter row and colum to shoot (separted by space): ").split()    
+        loc_str = input("\n Enter a row and column to shoot at (separated by a space): ")
+
+        if loc_str == 'Exit':
+            return print("\n Game Over! You have exited the game after", shots, "shots.")
+
+        if re.match("^\s*[0-9]\s[0-9]\s*$", loc_str) is None:
+            print("\n You did not enter two integers between 0 and 9." + error_message)
+            continue
+
+        loc_str = [int(num) for num in loc_str.split()]
+
         current_row = int(loc_str[0])
         current_column = int(loc_str[1])
         shots += 1
-        if check_if_hits(current_row, current_column, current_fleet):
-            print("You have a hit!")
-            (current_fleet, ship_hit) = hit(current_row, current_column, current_fleet)
-            if is_sunk(ship_hit):
-                print("You sank a " + ship_type(ship_hit) + "!")
-        else:
-            print("You missed!")
 
-        if not are_unsunk_shis_left(current_fleet): game_over = True
+        if check_if_hits(current_row, current_column, current_fleet):
+            print("\n You hit!")
+            (current_fleet, ship_hit) = hit(current_row, current_column, current_fleet)
+            print(current_fleet)
+            if is_sunk(ship_hit):
+                print("\n You sank a " + ship_type(ship_hit) + "!")
+        else:
+            print("\n You missed!")
+
+        if not are_unsunk_ships_left(current_fleet):
+            game_over = True
 
     print("Game over! You required", shots, "shots.")
 
 
-if __name__ == '__main__': #keep this in
-   main() """
+if __name__ == '__main__':
+    main()
