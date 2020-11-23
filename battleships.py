@@ -157,8 +157,6 @@ def main():
 
     current_fleet = randomly_place_all_ships()
 
-    print(current_fleet)
-
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
     game_over = False
     shots = 0
