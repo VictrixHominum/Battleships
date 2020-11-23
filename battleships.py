@@ -151,6 +151,7 @@ def main():
     shots = 0
 
     print(current_fleet)
+    print(type(current_fleet))
 
     print("\n Hello and welcome to Battleships! \n If at anypoint you wish to end the game simply enter 'Exit'. \n "
           "Good Luck!")
@@ -173,12 +174,13 @@ def main():
 
         if check_if_hits(current_row, current_column, current_fleet):
             print("\n You hit!")
-            (current_fleet, ship_hit) = hit(current_row, current_column, current_fleet)
+            print(type(current_fleet))
+            current_fleet = hit(current_row, current_column, current_fleet)
             print(current_fleet)
-            if is_sunk(ship_hit):
-                print("\n You sank a " + ship_type(ship_hit) + "!")
-        else:
-            print("\n You missed!")
+#            if is_sunk(ship_hit):
+#                print("\n You sank a " + ship_type(ship_hit) + "!")
+#        else:
+#            print("\n You missed!")
 
         if not are_unsunk_ships_left(current_fleet):
             game_over = True
