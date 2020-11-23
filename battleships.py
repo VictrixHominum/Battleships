@@ -126,13 +126,14 @@ def hit(row, column, fleet):
         for x in range(len(fleet)):
             ship_points = []
             if fleet[x][2] == True:
-                [(ship_points.append((fleet[x][0] + i, fleet[x][1]))) for i in range(0, fleet[x][3])]
-            else:
                 [(ship_points.append((fleet[x][0], fleet[x][1] + i))) for i in range(0, fleet[x][3])]
+            else:
+                [(ship_points.append((fleet[x][0] + i, fleet[x][1]))) for i in range(0, fleet[x][3])]
             if (row, column) in ship_points:
                 fleet[x][4].add((row, column))
                 fleet[x] = (fleet[x][0], fleet[x][1], fleet[x][2], fleet[x][3], fleet[x][4])
-                return fleet, fleet[x]
+                return (fleet, fleet[x])
+
 
 
 def are_unsunk_ships_left(fleet):

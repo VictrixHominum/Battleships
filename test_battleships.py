@@ -257,7 +257,7 @@ def test_are_unsunk_ships_left1():
     fleet = [(1, 3, False, 3, set([])), (0, 0, True, 2, set([])), (9, 1, True, 5, set([])), (1, 3, False, 3, set([])),
              (3, 6, True, 4, set([])), (3, 6, False, 4, set([])), (3, 9, False, 3, set([])), (7, 3, True, 2, set([])), (8, 9, False, 2, set([])),
              (8, 7, False, 2, set([]))]
-    assert are_unsunk_ships_left(fleet) == False
+    assert are_unsunk_ships_left(fleet) == True
 
 
 def test_are_unsunk_ships_left2():
@@ -265,7 +265,7 @@ def test_are_unsunk_ships_left2():
              (9, 1, True, 5, {(9, 5), (9, 4), (9, 3), (9, 2), (9, 1)}), (1, 5, False, 3, {(1, 5), (2, 5), (3, 5)}),
              (3, 6, False, 4, {(5, 6), (6, 6), (4, 6), (3, 6)}), (1, 9, False, 3, {(2, 9), (1, 9), (3, 9)}),
              (7, 3, True, 2, {(7, 3), (7, 4)}), (8, 9, False, 2, {(9, 9), (8, 9)}), (8, 7, False, 2, {(8, 7), (9, 7)})]
-    assert are_unsunk_ships_left(fleet) == True
+    assert are_unsunk_ships_left(fleet) == False
 
 
 def test_are_unsunk_ships_left3():
@@ -273,14 +273,14 @@ def test_are_unsunk_ships_left3():
              (9, 1, True, 5, {(9, 5), (9, 4), (9, 3), (9, 2), (9, 1)}), (1, 5, False, 3, {(1, 5), (2, 5), (3, 5)}),
              (3, 6, False, 4, {(5, 6), (6, 6), (4, 6), (3, 6)}), (1, 9, False, 3, {(2, 9), (1, 9)}),
              (7, 3, True, 2, {(7, 3), (7, 4)}), (8, 9, False, 2, {(9, 9), (8, 9)}), (8, 7, False, 2, {(8, 7), (9, 7)})]
-    assert are_unsunk_ships_left(fleet) == False
+    assert are_unsunk_ships_left(fleet) == True
 
 
 def test_are_unsunk_ships_left4():
     fleet = [(2, 3, False, 3, {(3, 3), (4, 3)}), (0, 0, True, 2, {(0, 1), (0, 2)}), (9, 1, True, 5, {(9, 5)}),
              (1, 5, False, 3, {(1, 5), (2, 5)}), (3, 6, False, 4, {(5, 6), (6, 6)}), (1, 9, False, 3, set([])),
              (7, 3, True, 2, {(7, 3)}), (8, 9, False, 2, {(9, 9)}), (8, 7, False, 2, set([]))]
-    assert are_unsunk_ships_left(fleet) == False
+    assert are_unsunk_ships_left(fleet) == True
 
 
 def test_are_unsunk_ships_left5():
@@ -288,4 +288,4 @@ def test_are_unsunk_ships_left5():
              (9, 1, True, 5, {(9, 5), (9, 4), (9, 3), (9, 2), (9, 1)}), (1, 5, False, 3, {(1, 5), (2, 5), (3, 5)}),
              (3, 6, False, 4, {(5, 6), (6, 6), (4, 6), (3, 6)}), (1, 9, False, 3, {(2, 9), (1, 9)}),
              (7, 3, True, 2, {(7, 3), (7, 4)}), (8, 9, False, 2, {(9, 9), (8, 9)}), (8, 7, False, 2, {(8, 7)})]
-    assert are_unsunk_ships_left(fleet) == False
+    assert are_unsunk_ships_left(fleet) == True
