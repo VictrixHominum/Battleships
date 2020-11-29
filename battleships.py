@@ -10,13 +10,13 @@ def is_sunk(ship):
 
 
 def ship_type(ship):
-    if ship[3] == 2:
+    if ship[3] == 1:
         return "Submarine"
-    elif ship[3] == 3:
+    elif ship[3] == 2:
         return "Destroyer"
-    elif ship[3] == 4:
+    elif ship[3] == 3:
         return "Cruiser"
-    elif ship[3] == 5:
+    elif ship[3] == 4:
         return "Battleship"
     else:
         return "Invalid"
@@ -105,8 +105,8 @@ def place_ship_at(row, column, horizontal, length, fleet):
 def randomly_place_all_ships():
     fleet = []
 
-    for num in range(5, 1, -1):
-        for count in range(0, 6 - num):
+    for num in range(4, 0, -1):
+        for count in range(0, 5 - num):
             finished = False
             while finished is not True:
                 ship = (random.randint(0, 9), random.randint(0, 9), random.choice([True, False]), num)
