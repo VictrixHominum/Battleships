@@ -63,7 +63,7 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
         allowed = False
 
     if horizontal is True:
-        if column + length -1 > 9:
+        if column + length - 1 > 9:
             allowed = False
     else:
         if row + length - 1 > 9:
@@ -120,6 +120,8 @@ def randomly_place_all_ships():
 def check_if_hits(row, column, fleet):
     occupied_spaces = []
     for ship in fleet:
+        if (row, column) in ship[4]:
+            return False
         if ship[2] == True:
             [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
         else:
@@ -145,7 +147,6 @@ def hit(row, column, fleet):
                 return (fleet, fleet[x])
 
 
-
 def are_unsunk_ships_left(fleet):
     for ship in fleet:
         if is_sunk(ship) == False:
@@ -154,7 +155,6 @@ def are_unsunk_ships_left(fleet):
 
 
 def main():
-
     current_fleet = randomly_place_all_ships()
 
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
