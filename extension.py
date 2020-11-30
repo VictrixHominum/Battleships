@@ -13,10 +13,10 @@ hits = 0
 
 
 def click_on(x, y):
+    """Create Response to button click depending if the co-ordinate has been hit or not"""
     global buttons, field, rows, cols, current_fleet, shots, hits
 
     shots += 1
-    buttons[x][y].config(disabledforeground='#FFFFFF')
     if field[x][y] == 0:
         buttons[x][y]["text"] = " "
     buttons[x][y]['state'] = 'disabled'
@@ -52,8 +52,13 @@ class Battleships:
         self.master = master
         master.title("Battleships")
 
+        '''Create Menu with options'''
+        menu_bar = Menu(master)
+        menu_bar.add_command(label="Exit", command=lambda: master.destroy())
+        menu_bar.add_command(label="Restart", command=lambda: self.restart())
+        master.config(menu=menu_bar)
 
-
+        '''Build button grid with co-ordinate reference'''
         self.label = Label(master, text="Battleships")
         self.label.grid(row=0, column=0, columnspan=11, sticky=W + E)
 
@@ -118,6 +123,15 @@ class Battleships:
         self.x8.grid(row=1, column=9)
         self.x9 = Label(master, text="9")
         self.x9.grid(row=1, column=10)
+
+        self.label = Label(master, text=f"Shots: {shots}")
+        self.label.grid(row=12, column=0, columnspan=11)
+
+    def restart(self):
+        self.master.destroy()
+        root = Tk()
+        app = Battleships(root)
+        root.mainloop()
 
 
 root = Tk()
