@@ -11,46 +11,14 @@ shots = 0
 hits = 0
 
 
-
-def click_on(x, y):
-    """Create Response to button click depending if the co-ordinate has been hit or not"""
-    global buttons, field, rows, cols, current_fleet, shots, hits
-
-    shots += 1
-    if field[x][y] == 0:
-        buttons[x][y]["text"] = " "
-    buttons[x][y]['state'] = 'disabled'
-    if check_if_hits(x-1, y-1, current_fleet) is True:
-        current_fleet, ship_hit = hit(x-1, y-1, current_fleet)
-        hits += 1
-        buttons[x][y].config(relief=SUNKEN, bg='#FF0000')
-        if is_sunk(ship_hit) is True:
-            co_ords = list(ship_hit[4])
-            for (x, y) in co_ords:
-                if ship_type(ship_hit) == "Submarine":
-                    buttons[x+1][y+1].config(text="S")
-                elif ship_type(ship_hit) == "Destroyer":
-                    buttons[x+1][y+1].config(text="D")
-                elif ship_type(ship_hit) == "Cruiser":
-                    buttons[x+1][y+1].config(text="C")
-                elif ship_type(ship_hit) == "Battleship":
-                    buttons[x + 1][y + 1].config(text="B")
-    else:
-        buttons[x][y].config(relief=SUNKEN, bg='#0000CD')
-
-    if are_unsunk_ships_left(current_fleet) is False:
-        showinfo("Game Over", f" You have won! \n You took {shots} shots.")
-        for x in range(0, rows):
-            for y in range(0, cols):
-                buttons[x][y]['state'] = 'disabled'
-
-
 class Battleships:
 
     def __init__(self, master):
         global rows, cols, buttons, field
         self.master = master
         master.title("Battleships")
+
+        self.shots = 0
 
         '''Create Menu with options'''
         menu_bar = Menu(master)
@@ -79,7 +47,8 @@ class Battleships:
                     l = Label(master, text=str(y))
                     buttons[x].append(l)
                 else:
-                    b = Button(master, text=" ", width=2, command=lambda x=x, y=y: click_on(x, y))
+                    b = Button(master, text=" ", width=2, disabledforeground='white',
+                               command=lambda x=x, y=y: self.click_on(x, y))
                     b.grid(row=x + 1, column=y, sticky=N + W + S + E)
                     buttons[x].append(b)
 
@@ -124,8 +93,38 @@ class Battleships:
         self.x9 = Label(master, text="9")
         self.x9.grid(row=1, column=10)
 
-        self.label = Label(master, text=f"Shots: {shots}")
-        self.label.grid(row=12, column=0, columnspan=11)
+    def click_on(self, x, y):
+        """Create Response to button click depending if the co-ordinate has been hit or not"""
+        global buttons, field, rows, cols, current_fleet, shots, hits
+
+        shots += 1
+
+        if field[x][y] == 0:
+            buttons[x][y]["text"] = " "
+        buttons[x][y]['state'] = 'disabled'
+        if check_if_hits(x - 1, y - 1, current_fleet) is True:
+            current_fleet, ship_hit = hit(x - 1, y - 1, current_fleet)
+            hits += 1
+            buttons[x][y].config(relief=SUNKEN, bg='#FF0000')
+            if is_sunk(ship_hit) is True:
+                co_ords = list(ship_hit[4])
+                for (x, y) in co_ords:
+                    if ship_type(ship_hit) == "Submarine":
+                        buttons[x + 1][y + 1].config(text="S")
+                    elif ship_type(ship_hit) == "Destroyer":
+                        buttons[x + 1][y + 1].config(text="D")
+                    elif ship_type(ship_hit) == "Cruiser":
+                        buttons[x + 1][y + 1].config(text="C")
+                    elif ship_type(ship_hit) == "Battleship":
+                        buttons[x + 1][y + 1].config(text="B")
+        else:
+            buttons[x][y].config(relief=SUNKEN, bg='#0000CD')
+
+        if are_unsunk_ships_left(current_fleet) is False:
+            showinfo("Game Over", f" You have won! \n You took {shots} shots.")
+            for x in range(0, rows):
+                for y in range(0, cols):
+                    buttons[x][y]['state'] = 'disabled'
 
     def restart(self):
         self.master.destroy()
