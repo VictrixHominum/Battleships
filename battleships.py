@@ -3,6 +3,7 @@ import re
 
 
 def is_sunk(ship):
+    """Checks to see if the length of the ship equals the number of hits, if so returns True, else False."""
     if len(ship[4]) == ship[3]:
         return True
     else:
@@ -10,6 +11,7 @@ def is_sunk(ship):
 
 
 def ship_type(ship):
+    """Returns a ship's type by examining it's length element. If not a valid length returns 'Invalid'."""
     if ship[3] == 1:
         return "Submarine"
     elif ship[3] == 2:
@@ -23,6 +25,9 @@ def ship_type(ship):
 
 
 def is_open_sea(row, column, fleet):
+    """Adds all occupied and horizontally, vertically and diagonally adjacent co-ordinate pairs to a list. If the point
+    selected is out of bounds or in the aforementioned list it returns False, else True."""
+
     # checks point is on the grid
     if 0 < (row or column) > 9:
         return False
@@ -56,6 +61,10 @@ def is_open_sea(row, column, fleet):
 
 
 def ok_to_place_ship_at(row, column, horizontal, length, fleet):
+    """Validates whether a ship can be placed in a given location. Checking that the fleet is not full, the ship is a
+    valid ship, at no point would the ship exceed bounds and that the maximum number of this ship type has not been
+     reached. If any of these conditions are met, it returns False, else True."""
+
     allowed = True
 
     # checks to see if the fleet is full and new ship is a valid ship
@@ -94,6 +103,7 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
 
 
 def place_ship_at(row, column, horizontal, length, fleet):
+    """If a ship has received a True from ok_to_place_ship_at() this adds it to the fleet."""
     if ok_to_place_ship_at(row, column, horizontal, length, fleet) == True:
         fleet.append((row, column, horizontal, length, set([])))
         return fleet
@@ -103,6 +113,8 @@ def place_ship_at(row, column, horizontal, length, fleet):
 
 
 def randomly_place_all_ships():
+    """Places all ships for a fleet. Starting by randomly generating a battleship and working its way down by length to
+    submarine. For each ship it verifies placement is valid using ok_to_place_ship_at() allows ship to be added."""
     fleet = []
 
     for num in range(4, 0, -1):
@@ -118,6 +130,8 @@ def randomly_place_all_ships():
 
 
 def check_if_hits(row, column, fleet):
+    """Creates a list of co-ordinate tuples that are occupied by a ship. If this point has already been hit or is not in
+    this list it returns False, else True."""
     occupied_spaces = []
     for ship in fleet:
         if (row, column) in ship[4]:
@@ -134,6 +148,8 @@ def check_if_hits(row, column, fleet):
 
 
 def hit(row, column, fleet):
+    """If a co-ordinate returns a True from check_if_hits, this adds the hit to the ship in the fleet and returns the
+    new fleet and ship hit."""
     if check_if_hits(row, column, fleet) == True:
         for x in range(len(fleet)):
             ship_points = []
@@ -148,6 +164,7 @@ def hit(row, column, fleet):
 
 
 def are_unsunk_ships_left(fleet):
+    """For every ship in fleet it checks if sunk, if a ship is not sunk it returns True, else False"""
     for ship in fleet:
         if is_sunk(ship) == False:
             return True
@@ -155,8 +172,12 @@ def are_unsunk_ships_left(fleet):
 
 
 def main():
+    """Main function: controls game flow."""
+
+    # Initialises new randomly generate fleet
     current_fleet = randomly_place_all_ships()
 
+    # Sets game variables
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
     game_over = False
     shots = 0
@@ -167,19 +188,22 @@ def main():
     while not game_over:
         loc_str = input("\n Enter a row and column to shoot at (separated by a space): ")
 
+        # Checks that the player has not chosen to exit the game.
         if loc_str == 'Exit':
             return print("\n Game Over! You have exited the game after", shots, "shots.")
 
+        # Checks that the input is valid.
         if re.match("^\s*[0-9]\s[0-9]\s*$", loc_str) is None:
             print("\n You did not enter two integers between 0 and 9." + error_message)
             continue
 
+        # Turns input string into row and column integers for functions
         loc_str = [int(num) for num in loc_str.split()]
-
         current_row = int(loc_str[0])
         current_column = int(loc_str[1])
         shots += 1
 
+        # If shot hits, affirms it and updates player. If a ship is sunk player is also updated. Confirms miss on miss.
         if check_if_hits(current_row, current_column, current_fleet):
             print("\n You hit!")
             current_fleet, ship_hit = hit(current_row, current_column, current_fleet)
@@ -188,6 +212,7 @@ def main():
         else:
             print("\n You missed!")
 
+        # If all ships have been sunk, sets game_over to True, breaking the run loop and finishing the game.
         if not are_unsunk_ships_left(current_fleet):
             game_over = True
 
