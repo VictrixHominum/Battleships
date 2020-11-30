@@ -127,7 +127,10 @@ class Battleships:
                     buttons[x][y]['state'] = 'disabled'
 
     def restart(self):
+        global shots, current_fleet
         self.master.destroy()
+        current_fleet = randomly_place_all_ships()
+        shots = 0
         root = Tk()
         app = Battleships(root)
         root.mainloop()
