@@ -27,7 +27,7 @@ def is_open_sea(row, column, fleet):
     if 0 < (row or column) > 9:
         return False
 
-    # creates list of all points that are occupied or adjacent to the existing fleet
+    # creates list of all co-ordinates that are occupied or adjacent to the existing fleet
     blocked_spaces = []
 
     for ship in fleet:
