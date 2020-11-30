@@ -14,19 +14,20 @@ hits = 0
 class Battleships:
 
     def __init__(self, master):
+        """Creates 10x10 button grid numbered 0-9, with a menu"""
         global rows, cols, buttons, field
         self.master = master
         master.title("Battleships")
 
         self.shots = 0
 
-        '''Create Menu with options'''
+        # Create Menu with options
         menu_bar = Menu(master)
         menu_bar.add_command(label="Exit", command=lambda: master.destroy())
         menu_bar.add_command(label="Restart", command=lambda: self.restart())
         master.config(menu=menu_bar)
 
-        '''Build button grid with co-ordinate reference'''
+        # Build button grid with co-ordinate reference
         self.label = Label(master, text="Battleships")
         self.label.grid(row=0, column=0, columnspan=11, sticky=W + E)
 
@@ -94,7 +95,8 @@ class Battleships:
         self.x9.grid(row=1, column=10)
 
     def click_on(self, x, y):
-        """Create Response to button click depending if the co-ordinate has been hit or not"""
+        """Creates a response to button click depending if the co-ordinate is a hit or not. If ocean, turns blue. If hit
+        turns red. If a ship is sunk updates all ship squares to show initial of ship type."""
         global buttons, field, rows, cols, current_fleet, shots, hits
 
         shots += 1
@@ -127,6 +129,7 @@ class Battleships:
                     buttons[x][y]['state'] = 'disabled'
 
     def restart(self):
+        """ Resets all game variables and shuts current game before starting again"""
         global shots, current_fleet
         self.master.destroy()
         current_fleet = randomly_place_all_ships()
