@@ -65,18 +65,10 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
     valid ship, at no point would the ship exceed bounds and that the maximum number of this ship type has not been
      reached. If any of these conditions are met, it returns False, else True."""
 
-    allowed = True
-
     # checks to see if the fleet is full and new ship is a valid ship
-    if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid"):
-        allowed = False
-
-    if horizontal is True:
-        if column + length - 1 > 9:
-            allowed = False
-    else:
-        if row + length - 1 > 9:
-            allowed = False
+    if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid") or horizontal and column + \
+            length - 1 > 9 or not horizontal and row + length - 1 > 9:
+        return False
 
     # checks if the number of ship of this type is already at the maximum
     count = 0
@@ -84,27 +76,24 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
         if ship[3] == length:
             count += 1
     if count >= 6 - length:
-        allowed = False
+        return False
 
     # checks if all points the ship would occupy are valid
-    if horizontal == True:
+    if horizontal is True:
         for j in range(0, length):
-            if is_open_sea(row, column + j, fleet) == False:
-                allowed = False
+            if is_open_sea(row, column + j, fleet) is False:
+                return False
     else:
         for j in range(0, length):
-            if is_open_sea(row + j, column, fleet) == False:
-                allowed = False
+            if is_open_sea(row + j, column, fleet) is False:
+                return False
 
-    if allowed is True:
-        return True
-    else:
-        return False
+    return True
 
 
 def place_ship_at(row, column, horizontal, length, fleet):
     """If a ship has received a True from ok_to_place_ship_at() this adds it to the fleet."""
-    if ok_to_place_ship_at(row, column, horizontal, length, fleet) == True:
+    if ok_to_place_ship_at(row, column, horizontal, length, fleet) is True:
         fleet.append((row, column, horizontal, length, set([])))
         return fleet
 
@@ -125,7 +114,6 @@ def randomly_place_all_ships():
                 if ok_to_place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet):
                     place_ship_at(ship[0], ship[1], ship[2], ship[3], fleet)
                     finished = True
-
     return fleet
 
 
@@ -136,7 +124,7 @@ def check_if_hits(row, column, fleet):
     for ship in fleet:
         if (row, column) in ship[4]:
             return False
-        if ship[2] == True:
+        if ship[2] is True:
             [(occupied_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
         else:
             [(occupied_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
@@ -150,24 +138,26 @@ def check_if_hits(row, column, fleet):
 def hit(row, column, fleet):
     """If a co-ordinate returns a True from check_if_hits, this adds the hit to the ship in the fleet and returns the
     new fleet and ship hit."""
-    if check_if_hits(row, column, fleet) == True:
+    if check_if_hits(row, column, fleet) is True:
         for x in range(len(fleet)):
             ship_points = []
-            if fleet[x][2] == True:
+            if fleet[x][2] is True:
                 [(ship_points.append((fleet[x][0], fleet[x][1] + i))) for i in range(0, fleet[x][3])]
             else:
                 [(ship_points.append((fleet[x][0] + i, fleet[x][1]))) for i in range(0, fleet[x][3])]
             if (row, column) in ship_points:
                 fleet[x][4].add((row, column))
                 fleet[x] = (fleet[x][0], fleet[x][1], fleet[x][2], fleet[x][3], fleet[x][4])
-                return (fleet, fleet[x])
+                return fleet, fleet[x]
 
 
 def are_unsunk_ships_left(fleet):
     """For every ship in fleet it checks if sunk, if a ship is not sunk it returns True, else False"""
     for ship in fleet:
-        if is_sunk(ship) == False:
+        if is_sunk(ship) is False:
+            print("This ship is not sunk")
             return True
+    print("All ships are sunk")
     return False
 
 
@@ -176,6 +166,7 @@ def main():
 
     # Initialises new randomly generate fleet
     current_fleet = randomly_place_all_ships()
+
 
     # Sets game variables
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
