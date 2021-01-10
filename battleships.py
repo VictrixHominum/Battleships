@@ -36,7 +36,7 @@ def is_open_sea(row, column, fleet):
     blocked_spaces = []
 
     for ship in fleet:
-        if ship[2] == True:
+        if ship[2] is True:
             [(blocked_spaces.append((ship[0], ship[1] + i))) for i in range(0, ship[3])]
         else:
             [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
