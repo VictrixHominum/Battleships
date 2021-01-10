@@ -42,14 +42,8 @@ def is_open_sea(row, column, fleet):
             [(blocked_spaces.append((ship[0] + i, ship[1]))) for i in range(0, ship[3])]
 
     for i in range(len(blocked_spaces)):
-        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1]))
-        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1]))
-        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1] + 1))
-        blocked_spaces.append((blocked_spaces[i][0] + 1, blocked_spaces[i][1] - 1))
-        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1] + 1))
-        blocked_spaces.append((blocked_spaces[i][0] - 1, blocked_spaces[i][1] - 1))
-        blocked_spaces.append((blocked_spaces[i][0], blocked_spaces[i][1] + 1))
-        blocked_spaces.append((blocked_spaces[i][0], blocked_spaces[i][1] - 1))
+        [blocked_spaces.append((blocked_spaces[i][0] + j, blocked_spaces[i][1] + k)) for k in range(-1, 2) for j in
+         range(-1, 2)]
 
     blocked_spaces = set(blocked_spaces)
 
@@ -166,7 +160,6 @@ def main():
 
     # Initialises new randomly generate fleet
     current_fleet = randomly_place_all_ships()
-
 
     # Sets game variables
     error_message = "\n Please enter two integers between 0 and 9, separated with a space."
