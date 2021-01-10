@@ -60,8 +60,8 @@ def ok_to_place_ship_at(row, column, horizontal, length, fleet):
      reached. If any of these conditions are met, it returns False, else True."""
 
     # checks to see if the fleet is full and new ship is a valid ship
-    if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid") or horizontal and column + \
-            length - 1 > 9 or not horizontal and row + length - 1 > 9:
+    if (len(fleet) == 10) or (ship_type((row, column, horizontal, length)) == "Invalid") or (
+            horizontal and column + length - 1 > 9) or (not horizontal and row + length - 1 > 9):
         return False
 
     # checks if the number of ship of this type is already at the maximum
